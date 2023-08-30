@@ -27,7 +27,7 @@
  * @defgroup bmp280 bmp280
  * @{
  *
- * ESP-IDF driver for BMP280/BME280 digital pressure sensor
+ * ESP-IDF driver for BMP280 digital pressure sensor
  *
  * Ported from esp-open-rtos
  *

@@ -25,7 +25,7 @@
 /**
  * @file bmp280.c
  *
- * ESP-IDF driver for BMP280/BME280 digital pressure sensor
+ * ESP-IDF driver for BMP280 digital pressure sensor
  *
  * Ported from esp-open-rtos
  *
@@ -335,7 +335,7 @@ static inline uint32_t compensate_pressure(bmp280_t *dev, int32_t adc_press, int
 }
 
 /**
- * Compensation algorithm is taken from BME280 datasheet.
+ * Compensation algorithm is taken from BMP280 datasheet.
  *
  * Return value is in Pa, 24 integer bits and 8 fractional bits.
  */

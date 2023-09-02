@@ -2,12 +2,12 @@
 ****************************************************************************
 * Copyright (C) 2023 - QualiZeal
 *
-* bme_app.c
+* led_app.c
 * Date: 2016/07/04
 * Revision: 2.0.5(Pressure and Temperature compensation code revision is 1.1
 *               and Humidity compensation code revision is 1.0)
 *
-* Usage: Sensor Driver interface file for BME280 sensor
+* Usage: LED over GPIO.
 *
 ****************************************************************************/
 

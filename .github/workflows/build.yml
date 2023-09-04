@@ -7,7 +7,7 @@ name:  Build and Publish Application
 on:
   push:
   pull_request:
-    branches: [main]
+    branches: [develop]
   workflow_dispatch:
     # Inputs the workflow accepts.
 
@@ -21,8 +21,7 @@ jobs:
         # See https://hub.docker.com/r/espressif/idf/tags and
         # https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/tools/idf-docker-image.html
         # for details.
-        #idf_ver: ["release-v4.3", "release-v4.4"]
-        idf_ver: ["latest"]
+        idf_ver: ["release-v5.1", "latest"]
         idf_target: ["esp32"]
     runs-on: ubuntu-latest
     steps:

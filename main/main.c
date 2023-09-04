@@ -5,6 +5,7 @@
 #include "debug_uart.h"
 #include "nvs_flash.h"
 #include "wifi_app.h"
+#include "rgb-led.h"
 
 #include "driver/gpio.h"
 #include "driver/i2c.h"
@@ -23,8 +24,8 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     // LED init.
-    led_init();
-    xTaskCreate(&led_blink_task, "led_blink_task",  1024, NULL, 6, NULL);
+    //led_init();
+    //xTaskCreate(&led_blink_task, "led_blink_task",  1024, NULL, 6, NULL);
 
     // bmp280 initialization.
     bmp280_mutex_init();
@@ -39,6 +40,8 @@ void app_main(void)
 
     if (wifi_connect_status_get())
     {
+        rgb_led_wifi_app_started();
+
 		//xTaskCreate(&send_data_to_thingspeak, "send_data_to_thingspeak", 8192, NULL, 6, NULL);
         setup_server();
         ESP_LOGI("MAIN-APP", "BMP280 Web Server is up and running\n");

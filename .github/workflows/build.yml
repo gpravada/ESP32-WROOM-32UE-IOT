@@ -1,0 +1,57 @@
+# This is a basic workflow that is manually triggered
+
+name:  Build and Publish Application
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        # The version names here correspond to the versions of espressif/idf Docker image.
+        # See https://hub.docker.com/r/espressif/idf/tags and
+        # https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/tools/idf-docker-image.html
+        # for details.
+        idf_ver: ["release-v4.3", "release-v4.4"]
+        idf_target: ["esp32"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - name: Build Application
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: ${{ matrix.idf_ver }}
+          target: ${{ matrix.idf_target }}
+      - name: Rename artifact
+        run: |
+          ls -lah
+          cp build/bootloader/bootloader.bin bootloader-${{ matrix.idf_ver }}.bin
+          cp build/partition_table/partition-table.bin partition-table-${{ matrix.idf_ver }}.bin
+          cp build/esp32-wroom-32ue-iot.bin esp32-wroom-32ue-iot-${{ matrix.idf_ver }}.bin
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: esp32-wroom-32ue-iot_${{ matrix.idf_target }}_${{ matrix.idf_ver }}
+          path: "*-${{ matrix.idf_ver }}.bin"
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Firmware Files
+      uses: actions/download-artifact@v3
+      with:
+        path: build

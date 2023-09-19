@@ -34,6 +34,6 @@ void led_blink_task(void *ignore)
     {
         led_state = !led_state;
         gpio_set_level(LED_GPIO_PIN, led_state);
-        vTaskDelay(1000/portTICK_PERIOD_MS);
+        vTaskDelay(500/portTICK_PERIOD_MS);
     }
 }

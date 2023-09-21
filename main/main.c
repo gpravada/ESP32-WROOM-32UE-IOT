@@ -47,9 +47,7 @@ void app_main(void)
         ESP_LOGI("MAIN-APP", "Failed to connected with Wi-Fi, check your network Credentials\n");
 
     //UART task
-#ifdef DEBUG_UART_TEST
     debug_uart_init();
     xTaskCreate(debug_uart_rx_task, "uart_rx_task", 1024*2, NULL, configMAX_PRIORITIES, NULL);
     xTaskCreate(debug_uart_tx_task, "uart_tx_task", 1024*2, NULL, configMAX_PRIORITIES-1, NULL);
-#endif
 }
